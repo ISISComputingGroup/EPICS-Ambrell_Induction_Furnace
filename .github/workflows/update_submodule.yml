@@ -1,0 +1,36 @@
+name: Send submodule updates to parent repo
+on:
+  push:
+    branches:
+      - main #NOTE: If adding this action to a new repo you may need to change the child repo branch name
+env:
+  PARENT_REPO_NAME: <GITHUB_ORGANISATION_ACCOUNT>/<PARENT_REPOSITORY> #NOTE: You may need to change the parent repo
+  PARENT_REPO_BRANCH: main #NOTE: You may need to change the parent repo branch name
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ${{ github.event.repository.name }}
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PRIVATE_TOKEN_GITHUB }}
+      - name: Checkout ${{ env.PARENT_REPO_NAME }}
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ env.PARENT_REPO_NAME }}
+          submodules: 'true'
+          ref: ${{ env.PARENT_REPO_BRANCH }}
+          token: ${{ secrets.PRIVATE_TOKEN_GITHUB }}
+          fetch-depth: 0
+      - name: Get submodule updates
+        run: |
+          cd ${{ github.event.repository.name }}
+          git fetch --all
+          git switch ${{ github.ref_name }}
+      - name: Commit and push the changes to ${{ env.PARENT_REPO_NAME }}
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions - update submodules"
+          git add --all
+          git commit -m "Auto-update: ${{ github.event.repository.name }}" -m "This is an automatic update completed by GitHub Actions, using submodule_update.yml. It was triggered by a push to the ${{ github.ref_name }} branch of the ${{ github.event.repository.name }} submodule repo." || echo "No changes to commit"
+          git push
