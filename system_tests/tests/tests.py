@@ -24,7 +24,7 @@ TEST_MODES = [TestModes.RECSIM, TestModes.DEVSIM]
 
 class Ambrell_Easy_HeatTests(unittest.TestCase):
     """
-    Tests for the _Device_ IOC.
+    Tests for the AMBRHEAT IOC.
     """
     def setUp(self):
         self._lewis, self._ioc = get_running_lewis_and_ioc("ambrell_easy_heat", DEVICE_PREFIX)

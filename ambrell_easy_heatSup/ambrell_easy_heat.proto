@@ -1,18 +1,21 @@
-getIDN {
-    out "*IDN?";
-    in "%\$1[^\r\n]";
+
+# TODO: pass in 'address' of PSU to precede each command
+
+
+getID {
+    out "address,SYSID";
+    in "[^\r\n]%\$1[^\r\n]";
     ExtraInput = Ignore;
 }
 
-cmd {
-    out "\$1";
+getDATA {
+    out "address,\$1,RDATA";
+    in "[^\r\n]%s[^\r\n]";
+    ExtraInput = Ignore;
 }
 
-setD {
-    out "\$1 %d";
-}
-getD {
-    out "\$1?";
-    in "%d";
+getSTATUS {
+    out "address,\$1,STAT";
+    in "[^\r\n]%s[^\r\n]";
     ExtraInput = Ignore;
 }
