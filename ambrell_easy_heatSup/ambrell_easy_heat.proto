@@ -1,21 +1,24 @@
 
 # TODO: pass in 'address' of PSU to precede each command
 
+OutTerminator = CR;
+
+# use RegEx for InTerminator
 
 getID {
-    out "address,SYSID";
+    out "\$1,SYSID";
     in "[^\r\n]%\$1[^\r\n]";
-    ExtraInput = Ignore;
+    # ExtraInput = Ignore; # accept all input during initial testing 
 }
 
-getDATA {
-    out "address,\$1,RDATA";
-    in "[^\r\n]%s[^\r\n]";
-    ExtraInput = Ignore;
+getData {
+    out "\$1,RDATA";
+    in "[^\r\n]\$1%s[^\r\n]";
+    # ExtraInput = Ignore; # accept all input during initial testing 
 }
 
-getSTATUS {
-    out "address,\$1,STAT";
-    in "[^\r\n]%s[^\r\n]";
-    ExtraInput = Ignore;
+getStatus {
+    out "\$1,STAT";
+    in "[^\r\n]\$1%s[^\r\n]";
+    # ExtraInput = Ignore; # accept all input during initial testing 
 }

@@ -24,19 +24,19 @@ record(ai, "$(P)ID") {
     field(DESC, "PSU ID number")
     field(DTYP, "Soft Channel stream")
     field(PINI, "YES")
-    field(INP,  "protocol file, (address_macro), getID")
+    field(INP,  "@ambrell_easy_heat.proto, getID($(ADDRESS)), $(PORT)")
 }
 
 record(waveform, "$(P)DATA:RAW") {
     field(DESC, "Returned raw data from PSU")
     field(NELM, "64")
     field(FTVL, "STRING")
-    field(INP,  "protocol file, (address_macro), getDATA")
+    field(INP,  "@ambrell_easy_heat.proto, getData($(ADDRESS)), $(PORT)")
 }
 
 record(waveform, "$(P)STATUS:RAW") {
     field(DESC, "Raw status of PSU")
     field(NELM, "64")
     field(FTVL, "STRING")
-    field(INP,  "protocol file, (address_macro), getSTATUS")
+    field(INP,  "@ambrell_easy_heat.proto, getStatus($(ADDRESS)), $(PORT)")
 }
