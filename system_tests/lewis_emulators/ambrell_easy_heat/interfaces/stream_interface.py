@@ -9,16 +9,16 @@ if_connected = conditional_reply("connected")
 class Ambrell_Easy_HeatStreamInterface(StreamInterface):
     
     in_terminator = "\r\n"
-    out_terminator = "\r\n"
+    out_terminator = "\r"
 
     def __init__(self):
         super(Ambrell_Easy_HeatStreamInterface, self).__init__()
         # Commands that we expect via serial during normal operation
         self.commands = {
             CmdBuilder(self.catch_all).arg("^#9.*$").build(),  # Catch-all command for debugging
-            CmdBuilder(self.get_id).int().escape("SYSID").eos().build(), # get system ID
-            CmdBuilder(self.get_data).int().escape("RDATA").eos().build(), # get raw data
-            CmdBuilder(self.get_status).int().escape("STAT").eos().build(), # get raw status
+            CmdBuilder(self.get_id).int().escape(",SYSID").eos().build(), # get system ID
+            CmdBuilder(self.get_data).int().escape(",RDATA").eos().build(), # get raw data
+            CmdBuilder(self.get_status).int().escape(",STAT").eos().build(), # get raw status
         }
 
     def handle_error(self, request, error):

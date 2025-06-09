@@ -13,9 +13,12 @@ class SimulatedAmbrell_Easy_Heat(StateMachineDevice):
         
         self.start_reply = "\r\n"
 
-        self.address = 0
-        self.id = "12345"
-        self.data = "1,2,3,4,5" # PS#, KW, SETV, TANKV, KHZ, COUNTER, %MATCH, AIR TEMP,
+        self.address = 3
+        
+        self.id = 12345
+
+        self.data = "1,1,280.0,280.0,1006,286,0,972"
+                                # PS#, KW, SETV, TANKV, KHZ, COUNTER, %MATCH, AIR TEMP,
                                 # HSINK TEMP, READY LED, HEAT LED, LIMIT LED, FAULT LED, TAP, MAX VOLTS, OVERLOAD, TIMER, ANALOG INPUT
                                 #
                                 # OR:

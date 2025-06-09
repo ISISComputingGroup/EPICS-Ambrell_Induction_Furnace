@@ -7,7 +7,7 @@ OutTerminator = CR;
 
 getID {
     out "\$1,SYSID";
-    in "[^\r\n]%\$1[^\r\n]";
+    in "[^\r\n]\$1%d[^\r\n]";
     # ExtraInput = Ignore; # accept all input during initial testing 
 }
 
