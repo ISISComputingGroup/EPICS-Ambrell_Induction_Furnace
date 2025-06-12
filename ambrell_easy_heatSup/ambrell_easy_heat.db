@@ -18,11 +18,21 @@ record(bo, "$(P)DISABLE")
     field(ONAM, "COMMS DISABLED")
 }
 
-record(ai, "$(P)ID") {
+record(stringin, "$(P)ID") {
     field(DESC, "PSU ID number")
     field(DTYP, "stream")
-    field(PINI, "YES")
-    field(INP,  "@ambrell_easy_heat.proto, getID($(ADDRESS)) $(PORT)")
+    # TODO: remove scan field and reenable PINI
+    # field(PINI, "YES")
+    field(SCAN, "1 second")
+    field(INP,  "@ambrell_easy_heat.proto getID($(ADDRESS)) $(PORT)")
+    
+    field(EGU, "")
+    field(PREC, "3")
+
+    info(INTEREST, "HIGH")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:ID")
+    field(SDIS, "$(P)DISABLE")
 }
 
 record(waveform, "$(P)DATA:RAW") {
@@ -31,7 +41,7 @@ record(waveform, "$(P)DATA:RAW") {
     field(SCAN, "1 second")
     field(NELM, "64")
     field(FTVL, "STRING")
-    field(INP,  "@ambrell_easy_heat.proto, getData($(ADDRESS)) $(PORT)")
+    field(INP,  "@ambrell_easy_heat.proto getData($(ADDRESS)) $(PORT)")
 }
 
 record(waveform, "$(P)STATUS:RAW") {
@@ -40,5 +50,12 @@ record(waveform, "$(P)STATUS:RAW") {
     field(SCAN, "1 second")
     field(NELM, "64")
     field(FTVL, "STRING")
-    field(INP,  "@ambrell_easy_heat.proto, getStatus($(ADDRESS)) $(PORT)")
+    field(INP,  "@ambrell_easy_heat.proto getStatus($(ADDRESS)) $(PORT)")
+}
+
+record(ai,"$(P)SIM:ID")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "12345")
 }

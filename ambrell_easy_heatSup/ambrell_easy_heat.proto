@@ -1,24 +1,22 @@
 
-# TODO: pass in 'address' of PSU to precede each command
-
+InTerminator = CR LF;
 OutTerminator = CR;
-
-# use RegEx for InTerminator
+start_string = "\r\n";
 
 getID {
     out "\$1,SYSID";
-    in "[^\r\n]\$1%d[^\r\n]";
+    in "\r\n\$1%s";
     # ExtraInput = Ignore; # accept all input during initial testing 
 }
 
 getData {
     out "\$1,RDATA";
-    in "[^\r\n]\$1%s[^\r\n]";
+    in "\r\n\$1%s";
     # ExtraInput = Ignore; # accept all input during initial testing 
 }
 
 getStatus {
     out "\$1,STAT";
-    in "[^\r\n]\$1%s[^\r\n]";
+    in "\r\n\$1%s";
     # ExtraInput = Ignore; # accept all input during initial testing 
 }
