@@ -25,33 +25,32 @@ record(stringin, "$(P)ID") {
     # field(PINI, "YES")
     field(SCAN, "1 second")
     field(INP,  "@ambrell_easy_heat.proto getID($(ADDRESS)) $(PORT)")
-    
-    field(EGU, "")
-    field(PREC, "3")
 
-    info(INTEREST, "HIGH")
+    info(INTEREST, "MEDIUM")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:ID")
     field(SDIS, "$(P)DISABLE")
 }
 
-record(waveform, "$(P)DATA:RAW") {
-    field(DESC, "Returned raw data from PSU")
-    field(DTYP, "stream")
-    field(SCAN, "1 second")
-    field(NELM, "64")
-    field(FTVL, "STRING")
-    field(INP,  "@ambrell_easy_heat.proto getData($(ADDRESS)) $(PORT)")
-}
+# record(waveform, "$(P)DATA:RAW") {
+#     field(DESC, "Raw data from PSU")
+#     field(DTYP, "stream")
+#     field(SCAN, "1 second")
+#     field(NELM, "64")
+#     field(FTVL, "STRING")
+#     field(INP,  "@ambrell_easy_heat.proto getData($(ADDRESS)) $(PORT)")
+# }
+# 
+# record(waveform, "$(P)STATUS:RAW") {
+#     field(DESC, "Raw status of PSU")
+#     field(DTYP, "stream")
+#     field(SCAN, "1 second")
+#     field(NELM, "64")
+#     field(FTVL, "STRING")
+#     field(INP,  "@ambrell_easy_heat.proto getStatus($(ADDRESS)) $(PORT)")
+# }
 
-record(waveform, "$(P)STATUS:RAW") {
-    field(DESC, "Raw status of PSU")
-    field(DTYP, "stream")
-    field(SCAN, "1 second")
-    field(NELM, "64")
-    field(FTVL, "STRING")
-    field(INP,  "@ambrell_easy_heat.proto getStatus($(ADDRESS)) $(PORT)")
-}
+# Simulation records
 
 record(ai,"$(P)SIM:ID")
 {

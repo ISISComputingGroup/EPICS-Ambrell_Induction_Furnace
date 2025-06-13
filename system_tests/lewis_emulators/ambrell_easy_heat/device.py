@@ -11,9 +11,9 @@ class SimulatedAmbrell_Easy_Heat(StateMachineDevice):
         """
         self.connected = True
 
-        self.address = "3"
+        self.address = 3
         
-        self.id = "12345"
+        self.id = 12345
 
         self.data = "1,1,280.0,280.0,1006,286,0,972"
                                 # PS#, KW, SETV, TANKV, KHZ, COUNTER, %MATCH, AIR TEMP,

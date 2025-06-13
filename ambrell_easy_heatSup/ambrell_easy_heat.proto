@@ -5,7 +5,8 @@ start_string = "\r\n";
 
 getID {
     out "\$1,SYSID";
-    in "\r\n\$1%s";
+    # in "\r\n\$1%s";
+    in "%s";
     # ExtraInput = Ignore; # accept all input during initial testing 
 }
 
