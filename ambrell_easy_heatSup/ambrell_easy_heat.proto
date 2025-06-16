@@ -1,23 +1,24 @@
 
 InTerminator = CR LF;
 OutTerminator = CR;
-start_string = "\r\n";
 
 getID {
     out "\$1,SYSID";
-    # in "\r\n\$1%s";
-    in "%s";
-    # ExtraInput = Ignore; # accept all input during initial testing 
+
+    in "";          # read up to first terminator, which removes "CR LF" from start of reply, then pass on remaining string
+    in "%*d,%s";    # read, but not capture, a series of integers up to "," and then pass remaining string back to DB
 }
 
 getData {
     out "\$1,RDATA";
+
     in "\r\n\$1%s";
     # ExtraInput = Ignore; # accept all input during initial testing 
 }
 
 getStatus {
     out "\$1,STAT";
+
     in "\r\n\$1%s";
     # ExtraInput = Ignore; # accept all input during initial testing 
 }

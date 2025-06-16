@@ -21,11 +21,10 @@ record(bo, "$(P)DISABLE")
 record(stringin, "$(P)ID") {
     field(DESC, "PSU ID number")
     field(DTYP, "stream")
-    # TODO: remove scan field and reenable PINI
-    # field(PINI, "YES")
-    field(SCAN, "1 second")
+    field(SCAN, "10 second")
     field(INP,  "@ambrell_easy_heat.proto getID($(ADDRESS)) $(PORT)")
 
+    info(alarm, "AMBRHEAT")
     info(INTEREST, "MEDIUM")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:ID")
@@ -39,6 +38,7 @@ record(stringin, "$(P)ID") {
 #     field(NELM, "64")
 #     field(FTVL, "STRING")
 #     field(INP,  "@ambrell_easy_heat.proto getData($(ADDRESS)) $(PORT)")
+#     info(archive, "VAL")
 # }
 # 
 # record(waveform, "$(P)STATUS:RAW") {
@@ -48,6 +48,7 @@ record(stringin, "$(P)ID") {
 #     field(NELM, "64")
 #     field(FTVL, "STRING")
 #     field(INP,  "@ambrell_easy_heat.proto getStatus($(ADDRESS)) $(PORT)")
+#     info(archive, "VAL")
 # }
 
 # Simulation records

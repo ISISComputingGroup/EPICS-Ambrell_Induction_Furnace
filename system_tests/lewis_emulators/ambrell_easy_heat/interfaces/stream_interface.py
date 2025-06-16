@@ -9,14 +9,15 @@ if_connected = conditional_reply("connected")
 class Ambrell_Easy_HeatStreamInterface(StreamInterface):
     
     in_terminator = "\r"
-    reply_prefix = "\r\n"
+    
+    out_prefix = "\r\n"
     out_terminator = "\r\n"
 
     def __init__(self):
         super(Ambrell_Easy_HeatStreamInterface, self).__init__()
         # Commands that we expect via serial during normal operation
         self.commands = {
-            CmdBuilder(self.catch_all).arg("^#9.*$").eos().build(),  # Catch-all command for debugging
+            # CmdBuilder(self.catch_all).arg("^#9.*$").eos().build(),  # Catch-all command for debugging
             CmdBuilder(self.get_id, ignore_case=True).int().escape(",SYSID").eos().build(), # get system ID
             CmdBuilder(self.get_data, ignore_case=True).int().escape(",RDATA").eos().build(), # get raw data
             CmdBuilder(self.get_status, ignore_case=True).int().escape(",STAT").eos().build(), # get raw status
@@ -38,14 +39,12 @@ class Ambrell_Easy_HeatStreamInterface(StreamInterface):
    
     @if_connected
     def get_id(self, address):
-        reply = self.reply_prefix + str(self.device.address) + "," + str(self.device.id)
-        print("Start reply_",reply,"_End reply")
-        return reply
+        return self.out_prefix + str(self.device.address) + "," + str(self.device.id)
     
     @if_connected
     def get_data(self, address):
-        return self.reply_prefix + str(self.device.address) + "," + self.device.data
+        return self.out_prefix + str(self.device.address) + "," + self.device.data
 
     @if_connected
     def get_status(self, address):
-        return self.reply_prefix + str(self.device.address) + "," + self.device.status
+        return self.out_prefix + str(self.device.address) + "," + self.device.status

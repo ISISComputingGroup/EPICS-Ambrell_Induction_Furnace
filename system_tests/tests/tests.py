@@ -30,9 +30,6 @@ class Ambrell_Easy_HeatTests(unittest.TestCase):
         self._lewis, self._ioc = get_running_lewis_and_ioc("ambrell_easy_heat", DEVICE_PREFIX)
         self.ca = ChannelAccess(device_prefix=DEVICE_PREFIX)
 
-    # def test_that_fails(self):
-    #    self.fail("You haven't implemented any tests!")
-
     def test_WHEN_system_id_requested_THEN_value_returned(self):
         expected_system_id = "12345"
-        self.ca.assert_that_pv_is("ID", expected_system_id, timeout=2)
+        self.ca.assert_that_pv_is("ID", expected_system_id, timeout=10)
