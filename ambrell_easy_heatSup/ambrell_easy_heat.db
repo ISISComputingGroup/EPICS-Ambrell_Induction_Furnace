@@ -21,35 +21,49 @@ record(bo, "$(P)DISABLE")
 record(stringin, "$(P)ID") {
     field(DESC, "PSU ID number")
     field(DTYP, "stream")
-    field(SCAN, "10 second")
+    field(SCAN, "10 second") # SCAN rather than PINI to continuously check communications with device
     field(INP,  "@ambrell_easy_heat.proto getID($(ADDRESS)) $(PORT)")
 
     info(alarm, "AMBRHEAT")
     info(INTEREST, "MEDIUM")
+    info(archive, "VAL")
+
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:ID")
     field(SDIS, "$(P)DISABLE")
 }
 
-# record(waveform, "$(P)DATA:RAW") {
-#     field(DESC, "Raw data from PSU")
-#     field(DTYP, "stream")
-#     field(SCAN, "1 second")
-#     field(NELM, "64")
-#     field(FTVL, "STRING")
-#     field(INP,  "@ambrell_easy_heat.proto getData($(ADDRESS)) $(PORT)")
-#     info(archive, "VAL")
-# }
-# 
-# record(waveform, "$(P)STATUS:RAW") {
-#     field(DESC, "Raw status of PSU")
-#     field(DTYP, "stream")
-#     field(SCAN, "1 second")
-#     field(NELM, "64")
-#     field(FTVL, "STRING")
-#     field(INP,  "@ambrell_easy_heat.proto getStatus($(ADDRESS)) $(PORT)")
-#     info(archive, "VAL")
-# }
+record(waveform, "$(P)DATA:RAW") {
+    field(DESC, "Raw data from PSU")
+    field(DTYP, "stream")
+    field(SCAN, "1 second")
+    field(NELM, "64")
+    field(FTVL, "STRING")
+    field(INP,  "@ambrell_easy_heat.proto getData($(ADDRESS)) $(PORT)")
+    
+    info(INTEREST, "LOW")
+    info(archive, "VAL")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:DATA:RAW")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(waveform, "$(P)STATUS:RAW") {
+    field(DESC, "Raw status of PSU")
+    field(DTYP, "stream")
+    field(SCAN, "1 second")
+    field(NELM, "64")
+    field(FTVL, "STRING")
+    field(INP,  "@ambrell_easy_heat.proto getStatus($(ADDRESS)) $(PORT)")
+
+    info(INTEREST, "LOW")
+    info(archive, "VAL")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:STATUS:RAW")
+    field(SDIS, "$(P)DISABLE")
+}
 
 # Simulation records
 
@@ -58,4 +72,18 @@ record(ai,"$(P)SIM:ID")
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")
     field(VAL,  "12345")
+}
+
+record(stringin,"$(P)SIM:DATA:RAW")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "1,1,280.0,280.0,1006,286,0,972")
+}
+
+record(stringin,"$(P)SIM:STATUS:RAW")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "1,2,3,4,5")
 }

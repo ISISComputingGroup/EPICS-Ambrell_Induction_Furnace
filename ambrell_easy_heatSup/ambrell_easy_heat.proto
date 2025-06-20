@@ -2,23 +2,25 @@
 InTerminator = CR LF;
 OutTerminator = CR;
 
+# send 'address,command'
+
 getID {
-    out "\$1,SYSID";
+    out "\$1,SYSID"; 
 
     in "";          # read up to first terminator, which removes "CR LF" from start of reply, then pass on remaining string
-    in "%*d,%s";    # read, but not capture, a series of integers up to "," and then pass remaining string back to DB
+    in "%*d,%s";    # read, but not capture, a series of integers up to "," (the returned address) and then pass remaining string back to DB
 }
 
 getData {
     out "\$1,RDATA";
 
-    in "\r\n\$1%s";
-    # ExtraInput = Ignore; # accept all input during initial testing 
+    in "";
+    in "%*d,%s";
 }
 
 getStatus {
     out "\$1,STAT";
 
-    in "\r\n\$1%s";
-    # ExtraInput = Ignore; # accept all input during initial testing 
+    in "";
+    in "%*d,%s";
 }
