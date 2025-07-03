@@ -8,19 +8,42 @@ getID {
     out "\$1,SYSID"; 
 
     in "";          # read up to first terminator, which removes "CR LF" from start of reply, then pass on remaining string
-    in "%*d,%s";    # read, but not capture, a series of integers up to "," (the returned address) and then pass remaining string back to DB
+    in "%d";        # read a series of integers (the returned address) and then pass back to DB
 }
 
-getData {
+getRawData {
     out "\$1,RDATA";
 
     in "";
-    in "%*d,%s";
+    in "%s";
 }
 
-getStatus {
+getRawStatus {
     out "\$1,STAT";
 
     in "";
-    in "%*d,%s";
+    in "%s";
+}
+
+# Get all PSU information
+#
+# address, heat on (1=on, 0=off), set point (A), readback tank (A), power (W), frequency (kHz), 
+# count down timer (msec.), count up timer (msec.)
+#
+# Example reply: <CR><LF>1,1,280.0,280.0,1006,286,0,972<CR><LF>
+#
+getData {
+    # TODO: add '.A' to PV name for error_setter template to populate alarm fields (copy alarm status from ADDRESS PV)
+    out "\$1,RDATA";
+
+    in "";                              # Read first 'termination' character
+    in "%d,"                            # PSU address
+       "%(\$2HEAT:RBV){0|1},"               # Heat on (0=Off, 1=On)
+       "%*s";                           # ignore rest of return string during testing.  TODO: remove
+    #   "%(\$2TANK:CURR:SP:RBV)f,"       # Tank current Set point (A)
+    #   "%(\$2TANK:CURR:RBV)f,"          # Tank current (A)
+    #   "%(\$2POWER:RBV)f,"              # Power (W)
+    #   "%(\$2FREQ:RBV)f,"               # Frequency (kHz)
+    #   "%(\$2TIMER:DOWN:RBV)f,"         # Count down timer (ms)
+    #   "%(\$2TIMER:UP:RBV)f,";          # Count up timer (ms)
 }

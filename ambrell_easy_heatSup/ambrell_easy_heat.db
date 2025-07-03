@@ -18,13 +18,13 @@ record(bo, "$(P)DISABLE")
     field(ONAM, "COMMS DISABLED")
 }
 
-record(stringin, "$(P)ID") {
+record(longin, "$(P)ID") {
     field(DESC, "PSU ID number")
     field(DTYP, "stream")
-    field(SCAN, "10 second") # SCAN rather than PINI to continuously check communications with device
+    field(SCAN, "10 second")            # SCAN rather than PINI to continuously check communications with device
     field(INP,  "@ambrell_easy_heat.proto getID($(ADDRESS)) $(PORT)")
 
-    info(alarm, "AMBRHEAT")
+    info(alarm, "AMBRHEAT")             # add IOC to alarm system
     info(INTEREST, "MEDIUM")
     info(archive, "VAL")
 
@@ -33,57 +33,100 @@ record(stringin, "$(P)ID") {
     field(SDIS, "$(P)DISABLE")
 }
 
-record(waveform, "$(P)DATA:RAW") {
-    field(DESC, "Raw data from PSU")
+record(longin, "$(P)ADDRESS:RBV") {
+    field(DESC, "PSU Address")
     field(DTYP, "stream")
-    field(SCAN, "1 second")
-    field(NELM, "64")
-    field(FTVL, "STRING")
-    field(INP,  "@ambrell_easy_heat.proto getData($(ADDRESS)) $(PORT)")
+    field(SCAN, "1 second") 
+    field(INP,  "@ambrell_easy_heat.proto getData($(ADDRESS),$(P)) $(PORT)") # PV to read PSU data string and trigger record redirection to individual PVs
+
+    info(INTEREST, "MEDIUM")
+    info(archive, "VAL")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:ADDRESS:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(bi, "$(P)HEAT:RBV")
+{
+    field(DESC, "Heat status")
+    field(DTYP, "Soft Channel")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
     
-    info(INTEREST, "LOW")
-    info(archive, "VAL")
-
     field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:DATA:RAW")
+    field(SIOL, "$(P)SIM:HEAT:RBV")
     field(SDIS, "$(P)DISABLE")
 }
 
-record(waveform, "$(P)STATUS:RAW") {
-    field(DESC, "Raw status of PSU")
-    field(DTYP, "stream")
-    field(SCAN, "1 second")
-    field(NELM, "64")
-    field(FTVL, "STRING")
-    field(INP,  "@ambrell_easy_heat.proto getStatus($(ADDRESS)) $(PORT)")
-
-    info(INTEREST, "LOW")
-    info(archive, "VAL")
-
-    field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:STATUS:RAW")
-    field(SDIS, "$(P)DISABLE")
-}
+# record(waveform, "$(P)DATA:RAW") {
+#     field(DESC, "Raw data from PSU")
+#     field(DTYP, "stream")
+#     field(SCAN, "1 second")
+#     field(NELM, "64")
+#     field(FTVL, "STRING")
+#     field(INP,  "@ambrell_easy_heat.proto getRawData($(ADDRESS)) $(PORT)")
+#     
+#     info(INTEREST, "LOW")
+#     info(archive, "VAL")
+# 
+#     field(SIML, "$(P)SIM")
+#     field(SIOL, "$(P)SIM:DATA:RAW")
+#     field(SDIS, "$(P)DISABLE")
+# }
+# 
+# record(waveform, "$(P)STATUS:RAW") {
+#     field(DESC, "Raw status of PSU")
+#     field(DTYP, "stream")
+#     field(SCAN, "1 second")
+#     field(NELM, "64")
+#     field(FTVL, "STRING")
+#     field(INP,  "@ambrell_easy_heat.proto getRawStatus($(ADDRESS)) $(PORT)")
+# 
+#     info(INTEREST, "LOW")
+#     info(archive, "VAL")
+# 
+#     field(SIML, "$(P)SIM")
+#     field(SIOL, "$(P)SIM:STATUS:RAW")
+#     field(SDIS, "$(P)DISABLE")
+# }
 
 # Simulation records
 
-record(ai,"$(P)SIM:ID")
+record(longin,"$(P)SIM:ID")
 {
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")
     field(VAL,  "12345")
 }
 
-record(stringin,"$(P)SIM:DATA:RAW")
+record(longin,"$(P)SIM:ADDRESS:RBV")
 {
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")
-    field(VAL,  "1,1,280.0,280.0,1006,286,0,972")
+    field(VAL,  "3")
 }
 
-record(stringin,"$(P)SIM:STATUS:RAW")
+record(bi,"$(P)SIM:HEAT:RBV")
 {
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")
-    field(VAL,  "1,2,3,4,5")
+    field(VAL,  "ON")
 }
+
+# record(stringin,"$(P)SIM:DATA:RAW")
+# {
+#     field(SCAN, "Passive")
+#     field(DTYP, "Soft Channel")
+#     field(VAL,  "1,1,280.0,280.0,1006,286,0,972")
+# }
+# 
+# record(stringin,"$(P)SIM:STATUS:RAW")
+# {
+#     field(SCAN, "Passive")
+#     field(DTYP, "Soft Channel")
+#     field(VAL,  "1,2,3,4,5")
+# }
