@@ -17,7 +17,7 @@ class SimulatedAmbrell_Easy_Heat(StateMachineDevice):
 
         self.id = 12345
 
-        self.data = str(self.address) + "," + str(self.heat_status) + "," + "280.0,280.0,1006,286,0,972"
+        self.data = str(self.address) + "," + str(self.heat_status) + "," + "285.0,280.0,1006,286,0,972"
                                 # 
                                 # Power supply address, heat on (1=on, 0=off), set point amps, tank amps, power watts, frequency kHz, 
                                 # count down timer (msec.), count up timer (msec.)
@@ -31,7 +31,7 @@ class SimulatedAmbrell_Easy_Heat(StateMachineDevice):
                                 #
 
         self.status = "1,2,3,4,5"
-                                # Not sure exactly what is returned from the physical PSU - manual ambiguous
+                                # Not sure exactly what is returned from the physical PSU - manual is ambiguous
                                 # e.g Mains voltage, total time, max. power out, max. heat sink temperature, max. enclosure temperature
 
     def _get_state_handlers(self):

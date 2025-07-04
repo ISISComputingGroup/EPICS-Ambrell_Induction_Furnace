@@ -62,6 +62,92 @@ record(bi, "$(P)HEAT:RBV")
     field(SDIS, "$(P)DISABLE")
 }
 
+record(ai, "$(P)TANK:CURR:SP:RBV") {
+    field(DESC, "Tank Current Setpoint Readback")
+    field(DTYP, "Soft Channel")
+    field(EGU, "A")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TANK:CURR:SP:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(ai, "$(P)TANK:CURR:RBV") {
+    field(DESC, "Tank Current Readback")
+    field(DTYP, "Soft Channel")
+    field(EGU, "A")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TANK:CURR:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(longin, "$(P)POWER:RBV") {
+    field(DESC, "Power")
+    field(DTYP, "Soft Channel")
+    field(EGU, "W")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:POWER:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(longin, "$(P)FREQ:RBV") {
+    field(DESC, "Frequency")
+    field(DTYP, "Soft Channel")
+    field(EGU, "kHz")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:FREQ:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(longin, "$(P)TIMER:DOWN:RBV") {
+    field(DESC, "Count down timer")
+    field(DTYP, "Soft Channel")
+    field(EGU, "ms")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TIMER:DOWN:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(longin, "$(P)TIMER:UP:RBV") {
+    field(DESC, "Count up timer")
+    field(DTYP, "Soft Channel")
+    field(EGU, "ms")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TIMER:UP:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
 # record(waveform, "$(P)DATA:RAW") {
 #     field(DESC, "Raw data from PSU")
 #     field(DTYP, "stream")
@@ -116,6 +202,49 @@ record(bi,"$(P)SIM:HEAT:RBV")
     field(DTYP, "Soft Channel")
     field(VAL,  "ON")
 }
+
+record(ai,"$(P)SIM:TANK:CURR:SP:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "285.0")
+}
+
+record(ai,"$(P)SIM:TANK:CURR:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "280.0")
+}
+
+record(longin,"$(P)SIM:POWER:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "1006")
+}
+
+record(longin,"$(P)SIM:FREQ:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "286")
+}
+
+record(longin,"$(P)SIM:TIMER:DOWN:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "0")
+}
+
+record(longin,"$(P)SIM:TIMER:UP:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "972")
+}
+
 
 # record(stringin,"$(P)SIM:DATA:RAW")
 # {

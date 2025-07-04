@@ -42,10 +42,36 @@ class Ambrell_Easy_HeatTests(unittest.TestCase):
 #        expected_raw_status = "1,2,3,4,5"
 #        self.ca.assert_that_pv_is("STATUS:RAW", expected_raw_status, timeout=2) # timeout to cover 1s SCAN of record.  Value returned in <1s.
 
+#   Tests for record redirection from returned data string
+
     def test_WHEN_data_requested_THEN_address_returned_and_PV_populated(self):
         expected_address = 3
         self.ca.assert_that_pv_is("ADDRESS:RBV", expected_address, timeout=2) # timeout to cover 1s SCAN of record.  Value returned in <1s.
 
     def test_WHEN_data_requested_THEN_heat_status_returned_and_PV_populated(self):
         expected_heat_status = "ON"
-        self.ca.assert_that_pv_is("HEAT:RBV", expected_heat_status, timeout=2) # timeout to cover 1s SCAN of record.  Value returned in <1s.
+        self.ca.assert_that_pv_is("HEAT:RBV", expected_heat_status, timeout=2)
+
+    def test_WHEN_data_requested_THEN_tank_current_setpoint_returned_and_PV_populated(self):
+        expected_tank_current_setpoint = 285.0
+        self.ca.assert_that_pv_is("TANK:CURR:SP:RBV", expected_tank_current_setpoint, timeout=2)
+
+    def test_WHEN_data_requested_THEN_tank_current_returned_and_PV_populated(self):
+        expected_tank_current = 280.0
+        self.ca.assert_that_pv_is("TANK:CURR:RBV", expected_tank_current, timeout=2)
+
+    def test_WHEN_data_requested_THEN_power_returned_and_PV_populated(self):
+        expected_power = 1006
+        self.ca.assert_that_pv_is("POWER:RBV", expected_power, timeout=2)
+
+    def test_WHEN_data_requested_THEN_frequency_returned_and_PV_populated(self):
+        expected_frequency = 286
+        self.ca.assert_that_pv_is("FREQ:RBV", expected_frequency, timeout=2)
+
+    def test_WHEN_data_requested_THEN_count_down_timer_returned_and_PV_populated(self):
+        expected_count_down_timer = 0
+        self.ca.assert_that_pv_is("TIMER:DOWN:RBV", expected_count_down_timer, timeout=2)
+
+    def test_WHEN_data_requested_THEN_count_up_timer_returned_and_PV_populated(self):
+        expected_count_up_timer = 972
+        self.ca.assert_that_pv_is("TIMER:UP:RBV", expected_count_up_timer, timeout=2)
