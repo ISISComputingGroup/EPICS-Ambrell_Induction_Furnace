@@ -75,3 +75,25 @@ class Ambrell_Easy_HeatTests(unittest.TestCase):
     def test_WHEN_data_requested_THEN_count_up_timer_returned_and_PV_populated(self):
         expected_count_up_timer = 972
         self.ca.assert_that_pv_is("TIMER:UP:RBV", expected_count_up_timer, timeout=2)
+
+#   Tests for record redirection from returned status string
+
+    def test_WHEN_status_requested_THEN_mains_voltage_returned_and_PV_populated(self):
+        expected_mains_voltage = 220.0
+        self.ca.assert_that_pv_is("VOLT:MAINS:RBV", expected_mains_voltage, timeout=2) # timeout to cover 1s SCAN of record.  Value returned in <1s.
+
+    def test_WHEN_status_requested_THEN_total_time_returned_and_PV_populated(self):
+        expected_total_time = 53.6
+        self.ca.assert_that_pv_is("TIME:TOTAL:RBV", expected_total_time, timeout=2)
+
+    def test_WHEN_status_requested_THEN_maximum_power_returned_and_PV_populated(self):
+        expected_maximum_power = 421.2
+        self.ca.assert_that_pv_is("POWER:MAX:RBV", expected_maximum_power, timeout=2)
+
+    def test_WHEN_status_requested_THEN_maximum_heatsink_temperature_returned_and_PV_populated(self):
+        expected_maximum_heatsink_temperature = 87.9
+        self.ca.assert_that_pv_is("TEMP:HEATSINK:MAX:RBV", expected_maximum_heatsink_temperature, timeout=2)
+
+    def test_WHEN_status_requested_THEN_maximum_enclosure_temperature_returned_and_PV_populated(self):
+        expected_maximum_enclosure_temperature = 62.8
+        self.ca.assert_that_pv_is("TEMP:ENCLOSURE:MAX:RBV", expected_maximum_enclosure_temperature, timeout=2)

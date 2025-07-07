@@ -11,20 +11,6 @@ getID {
     in "%d";        # read a series of integers (the returned address) and then pass back to DB
 }
 
-getRawData {
-    out "\$1,RDATA";
-
-    in "";
-    in "%s";
-}
-
-getRawStatus {
-    out "\$1,STAT";
-
-    in "";
-    in "%s";
-}
-
 # Get all PSU information
 #
 # address, heat on (1=on, 0=off), set point (A), readback tank (A), power (W), frequency (kHz), 
@@ -37,7 +23,7 @@ getData {
     out "\$1,RDATA";
 
     in "";                              # Read first 'termination' character
-    in "%d,"                            # PSU address
+    in "%d,"                            # PSU address  -  NOT redirected, but value returned to calling record
        "%(\$2HEAT:RBV)!1d,"             # Heat on (0=Off, 1=On)
        "%(\$2TANK:CURR:SP:RBV)f,"       # Tank current Set point (A)
        "%(\$2TANK:CURR:RBV)f,"          # Tank current (A)
@@ -45,4 +31,29 @@ getData {
        "%(\$2FREQ:RBV)d,"               # Frequency (kHz)
        "%(\$2TIMER:DOWN:RBV)d,"         # Count down timer (ms)
        "%(\$2TIMER:UP:RBV)d";           # Count up timer (ms)
+}
+
+getStatus {
+    out "\$1,STAT";
+
+    in "";                                  # Read first 'termination' character
+    in "%f,"                                # Mains voltage (V)  -  NOT redirected, but value returned to calling record
+       "%(\$2TIME:TOTAL:RBV)f,"             # Total time (s)
+       "%(\$2POWER:MAX:RBV)f,"              # Maximum power out (W)
+       "%(\$2TEMP:HEATSINK:MAX:RBV)f,"      # Maximum heat sink temperature (C)
+       "%(\$2TEMP:ENCLOSURE:MAX:RBV)f";     # Maximum enclosure temperature (C)
+}
+
+getRawData {
+    out "\$1,RDATA";
+
+    in "";
+    in "%s";
+}
+
+getRawStatus {
+    out "\$1,STAT";
+
+    in "";
+    in "%s";
 }

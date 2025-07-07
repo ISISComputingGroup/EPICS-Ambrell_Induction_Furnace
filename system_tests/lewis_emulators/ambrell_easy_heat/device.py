@@ -30,8 +30,8 @@ class SimulatedAmbrell_Easy_Heat(StateMachineDevice):
                                 # HSINK TEMP, READY LED, HEAT LED, LIMIT LED, FAULT LED, TAP, MAX VOLTS, OVERLOAD, TIMER, ANALOG INPUT
                                 #
 
-        self.status = "1,2,3,4,5"
-                                # Not sure exactly what is returned from the physical PSU - manual is ambiguous
+        self.status = "220.0,53.6,421.2,87.9,62.8"
+                                # Unclear as to exactly what is and how it is returned from the physical PSU - manual is ambiguous
                                 # e.g Mains voltage, total time, max. power out, max. heat sink temperature, max. enclosure temperature
 
     def _get_state_handlers(self):

@@ -148,6 +148,79 @@ record(longin, "$(P)TIMER:UP:RBV") {
 
 }
 
+record(ai, "$(P)VOLT:MAINS:RBV") {
+    field(DESC, "Mains Voltage")
+    field(DTYP, "stream")
+    field(SCAN, "1 second") 
+    field(INP,  "@ambrell_easy_heat.proto getStatus($(ADDRESS),$(P)) $(PORT)") # PV to read PSU status string and trigger record redirection to individual PVs
+    field(EGU, "V")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:VOLT:MAINS:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ai, "$(P)TIME:TOTAL:RBV") {
+    field(DESC, "Total Time")
+    field(DTYP, "Soft Channel")
+    field(EGU, "s")
+    field(PREC, "1")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TIME:TOTAL:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ai, "$(P)POWER:MAX:RBV") {
+    field(DESC, "Max Power")
+    field(DTYP, "Soft Channel")
+    field(EGU, "W")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:POWER:MAX:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ai, "$(P)TEMP:HEATSINK:MAX:RBV") {
+    field(DESC, "Max Heatsink Temp")
+    field(DTYP, "Soft Channel")
+    field(EGU, "C")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TEMP:HEATSINK:MAX:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ai, "$(P)TEMP:ENCLOSURE:MAX:RBV") {
+    field(DESC, "Max Enclosure Temp")
+    field(DTYP, "Soft Channel")
+    field(EGU, "C")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TEMP:ENCLOSURE:MAX:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+
 # record(waveform, "$(P)DATA:RAW") {
 #     field(DESC, "Raw data from PSU")
 #     field(DTYP, "stream")
@@ -200,7 +273,7 @@ record(bi,"$(P)SIM:HEAT:RBV")
 {
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")
-    field(VAL,  "ON")
+    field(VAL,  "1")
 }
 
 record(ai,"$(P)SIM:TANK:CURR:SP:RBV")
@@ -245,6 +318,41 @@ record(longin,"$(P)SIM:TIMER:UP:RBV")
     field(VAL,  "972")
 }
 
+
+record(ai,"$(P)SIM:VOLT:MAINS:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "220.0")
+}
+
+record(ai,"$(P)SIM:TIME:TOTAL:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "53.6")
+}
+
+record(ai,"$(P)SIM:POWER:MAX:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "421.2")
+}
+
+record(ai,"$(P)SIM:TEMP:HEATSINK:MAX:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "87.9")
+}
+
+record(ai,"$(P)SIM:TEMP:ENCLOSURE:MAX:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "62.8")
+}
 
 # record(stringin,"$(P)SIM:DATA:RAW")
 # {
