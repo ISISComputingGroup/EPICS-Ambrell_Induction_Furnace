@@ -29,8 +29,8 @@ getData {
        "%(\$2TANK:CURR:RBV)f,"          # Tank current (A)
        "%(\$2POWER:RBV)d,"              # Power (W)
        "%(\$2FREQ:RBV)d,"               # Frequency (kHz)
-       "%(\$2TIMER:DOWN:RBV)d,"         # Count down timer (ms)
-       "%(\$2TIMER:UP:RBV)d";           # Count up timer (ms)
+       "%(\$2TIME:DOWN:RBV)d,"         # Count down timer (ms)
+       "%(\$2TIME:UP:RBV)d";           # Count up timer (ms)
 }
 
 getStatus {

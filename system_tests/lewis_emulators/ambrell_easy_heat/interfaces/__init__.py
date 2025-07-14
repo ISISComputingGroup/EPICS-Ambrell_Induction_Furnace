@@ -1,3 +1,3 @@
-from .stream_interface import Ambrell_Easy_HeatStreamInterface
+from .stream_interface import AmbrellEasyHeatStreamInterface
 
-__all__ = ['Ambrell_Easy_HeatStreamInterface']
+__all__ = ["AmbrellEasyHeatStreamInterface"]

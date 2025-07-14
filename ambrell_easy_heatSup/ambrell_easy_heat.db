@@ -120,7 +120,7 @@ record(longin, "$(P)FREQ:RBV") {
 
 }
 
-record(longin, "$(P)TIMER:DOWN:RBV") {
+record(longin, "$(P)TIME:DOWN:RBV") {
     field(DESC, "Count down timer")
     field(DTYP, "Soft Channel")
     field(EGU, "ms")
@@ -129,12 +129,12 @@ record(longin, "$(P)TIMER:DOWN:RBV") {
     info(archive, "VAL")
     
     field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:TIMER:DOWN:RBV")
+    field(SIOL, "$(P)SIM:TIME:DOWN:RBV")
     field(SDIS, "$(P)DISABLE")
 
 }
 
-record(longin, "$(P)TIMER:UP:RBV") {
+record(longin, "$(P)TIME:UP:RBV") {
     field(DESC, "Count up timer")
     field(DTYP, "Soft Channel")
     field(EGU, "ms")
@@ -143,7 +143,7 @@ record(longin, "$(P)TIMER:UP:RBV") {
     info(archive, "VAL")
     
     field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:TIMER:UP:RBV")
+    field(SIOL, "$(P)SIM:TIME:UP:RBV")
     field(SDIS, "$(P)DISABLE")
 
 }
@@ -304,14 +304,14 @@ record(longin,"$(P)SIM:FREQ:RBV")
     field(VAL,  "286")
 }
 
-record(longin,"$(P)SIM:TIMER:DOWN:RBV")
+record(longin,"$(P)SIM:TIME:DOWN:RBV")
 {
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")
     field(VAL,  "0")
 }
 
-record(longin,"$(P)SIM:TIMER:UP:RBV")
+record(longin,"$(P)SIM:TIME:UP:RBV")
 {
     field(SCAN, "Passive")
     field(DTYP, "Soft Channel")
