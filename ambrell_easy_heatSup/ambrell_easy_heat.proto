@@ -19,29 +19,28 @@ getID {
 # Example reply: <CR><LF>1,1,280.0,280.0,1006,286,0,972<CR><LF>
 #
 getData {
-    # TODO: add '.A' to PV name for error_setter template to populate alarm fields (copy alarm status from ADDRESS PV)
     out "\$1,RDATA";
 
-    in "";                              # Read first 'termination' character
-    in "%d,"                            # PSU address  -  NOT redirected, but value returned to calling record
-       "%(\$2HEAT:RBV)!1d,"             # Heat on (0=Off, 1=On)
-       "%(\$2TANK:CURR:SP:RBV)f,"       # Tank current Set point (A)
-       "%(\$2TANK:CURR:RBV)f,"          # Tank current (A)
-       "%(\$2POWER:RBV)d,"              # Power (W)
-       "%(\$2FREQ:RBV)d,"               # Frequency (kHz)
-       "%(\$2TIME:DOWN:RBV)d,"         # Count down timer (ms)
-       "%(\$2TIME:UP:RBV)d";           # Count up timer (ms)
+    in "";                                  # Read first 'termination' character
+    in "%d,"                                # PSU address  -  NOT redirected, but value returned to calling record
+       "%(\$2HEAT:RBV:RAW.A)!1d,"           # Heat on (0=Off, 1=On)
+       "%(\$2TANK:CURR:SP:RBV:RAW.A)f,"     # Tank current Set point (A)
+       "%(\$2TANK:CURR:RBV:RAW.A)f,"        # Tank current (A)
+       "%(\$2POWER:RBV:RAW.A)d,"            # Power (W)
+       "%(\$2FREQ:RBV:RAW.A)d,"             # Frequency (kHz)
+       "%(\$2TIME:DOWN:RBV:RAW.A)d,"        # Count down timer (ms)
+       "%(\$2TIME:UP:RBV:RAW.A)d";          # Count up timer (ms)
 }
 
 getStatus {
     out "\$1,STAT";
 
-    in "";                                  # Read first 'termination' character
-    in "%f,"                                # Mains voltage (V)  -  NOT redirected, but value returned to calling record
-       "%(\$2TIME:TOTAL:RBV)f,"             # Total time (s)
-       "%(\$2POWER:MAX:RBV)f,"              # Maximum power out (W)
-       "%(\$2TEMP:HEATSINK:MAX:RBV)f,"      # Maximum heat sink temperature (C)
-       "%(\$2TEMP:ENCLOSURE:MAX:RBV)f";     # Maximum enclosure temperature (C)
+    in "";                                      # Read first 'termination' character
+    in "%f,"                                    # Mains voltage (V)  -  NOT redirected, but value returned to calling record
+       "%(\$2TIME:TOTAL:RBV:RAW.A)f,"           # Total time (s)
+       "%(\$2POWER:MAX:RBV:RAW.A)f,"            # Maximum power out (W)
+       "%(\$2TEMP:HEATSINK:MAX:RBV:RAW.A)f,"    # Maximum heat sink temperature (C)
+       "%(\$2TEMP:ENCLOSURE:MAX:RBV:RAW.A)f";   # Maximum enclosure temperature (C)
 }
 
 getRawData {
