@@ -6,7 +6,7 @@ from .states import DefaultState
 
 
 class SimulatedAmbrellEasyHeat(StateMachineDevice):
-    def _initialize_data(self):
+    def _initialize_data(self) -> None:
         """
         Initialize all of the device's attributes.
         """

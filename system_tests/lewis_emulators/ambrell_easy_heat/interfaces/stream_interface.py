@@ -1,10 +1,13 @@
+import logging
 import typing
+
 from lewis.adapters.stream import StreamInterface
 from lewis.core.logging import has_log
 from lewis.utils.command_builder import CmdBuilder
 from lewis.utils.replies import conditional_reply
 
-from system_tests.lewis_emulators.ambrell_easy_heat.device import SimulatedAmbrellEasyHeat
+if typing.TYPE_CHECKING:
+    from ..device import SimulatedAmbrellEasyHeat
 
 if_connected = conditional_reply("connected")
 
@@ -18,6 +21,8 @@ class AmbrellEasyHeatStreamInterface(StreamInterface):
 
     def __init__(self) -> None:
         super(AmbrellEasyHeatStreamInterface, self).__init__()
+        self.log: logging.Logger
+        self.device: SimulatedAmbrellEasyHeat
         # Commands that we expect via serial during normal operation
         self.commands = {
             # CmdBuilder(self.catch_all).arg("^#9.*$").eos().build(),
