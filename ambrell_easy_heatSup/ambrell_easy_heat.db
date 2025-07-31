@@ -221,6 +221,10 @@ record(ai, "$(P)TEMP:ENCLOSURE:MAX:RBV") {
 }
 
 
+# These records left in (and their associated SIM records) until testing with the hardware can be performed
+# as they can read a complete raw return string into a PV.
+# Particularly useful as is it unclear as to what exactly is in the reply.
+
 # record(waveform, "$(P)DATA:RAW") {
 #     field(DESC, "Raw data from PSU")
 #     field(DTYP, "stream")
@@ -252,6 +256,7 @@ record(ai, "$(P)TEMP:ENCLOSURE:MAX:RBV") {
 #     field(SIOL, "$(P)SIM:STATUS:RAW")
 #     field(SDIS, "$(P)DISABLE")
 # }
+
 
 # Simulation records
 
