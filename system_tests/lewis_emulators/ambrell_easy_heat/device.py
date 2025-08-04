@@ -18,7 +18,7 @@ class SimulatedAmbrellEasyHeat(StateMachineDevice):
 
         self.address = 3
 
-        self.heat_status = 1
+        self.heat_status = "ON"
 
         self.tank_current_setpoint = 285.0
 
@@ -43,7 +43,7 @@ class SimulatedAmbrellEasyHeat(StateMachineDevice):
         # HSINK TEMP, READY LED, HEAT LED, LIMIT LED, FAULT LED, TAP, MAX VOLTS, OVERLOAD,
         # TIMER, ANALOG INPUT
 
-        self.data = f"{self.address},{self.heat_status},{self.tank_current_setpoint},{self.tank_current},{self.power},{self.frequency},{self.count_down},{self.count_up}"
+        self.data = f"{self.address},{1 if self.heat_status == "ON" else 0},{self.tank_current_setpoint},{self.tank_current},{self.power},{self.frequency},{self.count_down},{self.count_up}"
 
 
         # Values in status string:
