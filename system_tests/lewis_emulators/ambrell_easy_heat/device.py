@@ -32,20 +32,7 @@ class SimulatedAmbrellEasyHeat(StateMachineDevice):
 
         self.count_up = 972
 
-        # Power supply address, heat on (1=on, 0=off), set point amps, tank amps, power watts,
-        # frequency kHz, count down timer (msec.), count up timer (msec.)
-        #
-        # Example reply:
-        # <CR><LF>1,1,280.0,280.0,1006,286,0,972<CR><LF>
-        #
-        # OR:
-        # Possibly EcoHeat model only: PS#, KW, SETV, TANKV, KHZ, COUNTER, %MATCH, AIR TEMP,
-        # HSINK TEMP, READY LED, HEAT LED, LIMIT LED, FAULT LED, TAP, MAX VOLTS, OVERLOAD,
-        # TIMER, ANALOG INPUT
-
-        self.data = f"{self.address},{1 if self.heat_status == "ON" else 0},{self.tank_current_setpoint},{self.tank_current},{self.power},{self.frequency},{self.count_down},{self.count_up}"
-
-
+        
         # Values in status string:
 
         self.mains_voltage = 220.0
@@ -58,13 +45,31 @@ class SimulatedAmbrellEasyHeat(StateMachineDevice):
 
         self.max_enclosure_temp = 62.8
 
+    
+    def build_data_string(self) -> str:
+        # Power supply address, heat on (1=on, 0=off), set point amps, tank amps, power watts,
+        # frequency kHz, count down timer (msec.), count up timer (msec.)
+        #
+        # Example reply:
+        # <CR><LF>1,1,280.0,280.0,1006,286,0,972<CR><LF>
+        #
+        # OR:
+        # Possibly EcoHeat model only: PS#, KW, SETV, TANKV, KHZ, COUNTER, %MATCH, AIR TEMP,
+        # HSINK TEMP, READY LED, HEAT LED, LIMIT LED, FAULT LED, TAP, MAX VOLTS, OVERLOAD,
+        # TIMER, ANALOG INPUT
+
+        return (f"{self.address},{1 if self.heat_status == "ON" else 0},"
+                f"{self.tank_current_setpoint},{self.tank_current},{self.power},"
+                f"{self.frequency},{self.count_down},{self.count_up}")
+
+    def build_status_string(self) -> str:
         # Unclear as to exactly what is and how it is returned from the physical PSU
         # as manual is ambiguous
         # e.g Mains voltage, total time, max. power out, max. heat sink temperature,
         # max. enclosure temperature
 
-        self.status = f"{self.mains_voltage},{self.total_time},{self.max_power},{self.max_heatsink_temp},{self.max_enclosure_temp}"
-
+        return (f"{self.mains_voltage},{self.total_time},{self.max_power},"
+                f"{self.max_heatsink_temp},{self.max_enclosure_temp}")
 
     def _get_state_handlers(self) -> dict:
         return {

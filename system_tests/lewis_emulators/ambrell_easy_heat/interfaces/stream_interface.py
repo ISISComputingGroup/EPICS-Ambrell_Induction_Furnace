@@ -65,8 +65,8 @@ class AmbrellEasyHeatStreamInterface(StreamInterface):
 
     @if_connected
     def get_data(self, address: int) -> str:
-        return self.out_prefix + self.device.data
+        return self.out_prefix + self.device.build_data_string()
 
     @if_connected
     def get_status(self, address: int) -> str:
-        return self.out_prefix + self.device.status
+        return self.out_prefix + self.device.build_status_string()
