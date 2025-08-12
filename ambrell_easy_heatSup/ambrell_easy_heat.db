@@ -1,0 +1,374 @@
+record(bo, "$(P)SIM")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(ZNAM, "NO")
+    field(ONAM, "YES")
+    field(VAL, "$(RECSIM=0)")
+    field(PINI, "YES")
+}
+
+record(bo, "$(P)DISABLE")
+{
+    field(DESC, "Disable comms")
+    field(PINI, "YES")
+    field(VAL, "$(DISABLE=0)")
+    field(OMSL, "supervisory")
+    field(ZNAM, "COMMS ENABLED")
+    field(ONAM, "COMMS DISABLED")
+}
+
+record(longin, "$(P)ID") {
+    field(DESC, "PSU ID number")
+    field(DTYP, "stream")
+    field(SCAN, "10 second")            # SCAN rather than PINI to continuously check communications with device
+    field(INP,  "@ambrell_easy_heat.proto getID($(ADDRESS)) $(PORT)")
+
+    info(alarm, "AMBRHEAT")             # add IOC to alarm system
+    info(INTEREST, "MEDIUM")
+    info(archive, "VAL")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:ID")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(longin, "$(P)ADDRESS:RBV") {
+    field(DESC, "PSU Address")
+    field(DTYP, "stream")
+    field(SCAN, "1 second") 
+    field(INP,  "@ambrell_easy_heat.proto getData($(ADDRESS),$(P)) $(PORT)") # PV to read PSU data string and trigger record redirection to individual PVs
+
+    info(INTEREST, "MEDIUM")
+    info(archive, "VAL")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:ADDRESS:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(bi, "$(P)HEAT:RBV")
+{
+    field(DESC, "Heat status")
+    field(DTYP, "Soft Channel")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:HEAT:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ai, "$(P)TANK:CURR:SP:RBV") {
+    field(DESC, "Tank Current Setpoint Readback")
+    field(DTYP, "Soft Channel")
+    field(EGU, "A")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TANK:CURR:SP:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(ai, "$(P)TANK:CURR:RBV") {
+    field(DESC, "Tank Current Readback")
+    field(DTYP, "Soft Channel")
+    field(EGU, "A")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TANK:CURR:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(longin, "$(P)POWER:RBV") {
+    field(DESC, "Power")
+    field(DTYP, "Soft Channel")
+    field(EGU, "W")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:POWER:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(longin, "$(P)FREQ:RBV") {
+    field(DESC, "Frequency")
+    field(DTYP, "Soft Channel")
+    field(EGU, "kHz")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:FREQ:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(longin, "$(P)TIME:DOWN:RBV") {
+    field(DESC, "Count down timer")
+    field(DTYP, "Soft Channel")
+    field(EGU, "ms")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TIME:DOWN:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(longin, "$(P)TIME:UP:RBV") {
+    field(DESC, "Count up timer")
+    field(DTYP, "Soft Channel")
+    field(EGU, "ms")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TIME:UP:RBV")
+    field(SDIS, "$(P)DISABLE")
+
+}
+
+record(ai, "$(P)VOLT:MAINS:RBV") {
+    field(DESC, "Mains Voltage")
+    field(DTYP, "stream")
+    field(SCAN, "1 second") 
+    field(INP,  "@ambrell_easy_heat.proto getStatus($(ADDRESS),$(P)) $(PORT)") # PV to read PSU status string and trigger record redirection to individual PVs
+    field(EGU, "V")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:VOLT:MAINS:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ai, "$(P)TIME:TOTAL:RBV") {
+    field(DESC, "Total Time")
+    field(DTYP, "Soft Channel")
+    field(EGU, "s")
+    field(PREC, "1")
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TIME:TOTAL:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ai, "$(P)POWER:MAX:RBV") {
+    field(DESC, "Max Power")
+    field(DTYP, "Soft Channel")
+    field(EGU, "W")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:POWER:MAX:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ai, "$(P)TEMP:HEATSINK:MAX:RBV") {
+    field(DESC, "Max Heatsink Temp")
+    field(DTYP, "Soft Channel")
+    field(EGU, "C")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TEMP:HEATSINK:MAX:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(ai, "$(P)TEMP:ENCLOSURE:MAX:RBV") {
+    field(DESC, "Max Enclosure Temp")
+    field(DTYP, "Soft Channel")
+    field(EGU, "C")
+    field(PREC, "1") 
+
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TEMP:ENCLOSURE:MAX:RBV")
+    field(SDIS, "$(P)DISABLE")
+}
+
+
+# These records left in (and their associated SIM records) until testing with the hardware can be performed
+# as they can read a complete raw return string into a PV.
+# Particularly useful as is it unclear as to what exactly is in the reply.
+
+# record(waveform, "$(P)DATA:RAW") {
+#     field(DESC, "Raw data from PSU")
+#     field(DTYP, "stream")
+#     field(SCAN, "1 second")
+#     field(NELM, "64")
+#     field(FTVL, "STRING")
+#     field(INP,  "@ambrell_easy_heat.proto getRawData($(ADDRESS)) $(PORT)")
+#     
+#     info(INTEREST, "LOW")
+#     info(archive, "VAL")
+# 
+#     field(SIML, "$(P)SIM")
+#     field(SIOL, "$(P)SIM:DATA:RAW")
+#     field(SDIS, "$(P)DISABLE")
+# }
+# 
+# record(waveform, "$(P)STATUS:RAW") {
+#     field(DESC, "Raw status of PSU")
+#     field(DTYP, "stream")
+#     field(SCAN, "1 second")
+#     field(NELM, "64")
+#     field(FTVL, "STRING")
+#     field(INP,  "@ambrell_easy_heat.proto getRawStatus($(ADDRESS)) $(PORT)")
+# 
+#     info(INTEREST, "LOW")
+#     info(archive, "VAL")
+# 
+#     field(SIML, "$(P)SIM")
+#     field(SIOL, "$(P)SIM:STATUS:RAW")
+#     field(SDIS, "$(P)DISABLE")
+# }
+
+
+# Simulation records
+
+record(longin,"$(P)SIM:ID")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "12345")
+}
+
+record(longin,"$(P)SIM:ADDRESS:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "3")
+}
+
+record(bi,"$(P)SIM:HEAT:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "1")
+}
+
+record(ai,"$(P)SIM:TANK:CURR:SP:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "285.0")
+}
+
+record(ai,"$(P)SIM:TANK:CURR:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "280.0")
+}
+
+record(longin,"$(P)SIM:POWER:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "1006")
+}
+
+record(longin,"$(P)SIM:FREQ:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "286")
+}
+
+record(longin,"$(P)SIM:TIME:DOWN:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "0")
+}
+
+record(longin,"$(P)SIM:TIME:UP:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "972")
+}
+
+
+record(ai,"$(P)SIM:VOLT:MAINS:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "220.0")
+}
+
+record(ai,"$(P)SIM:TIME:TOTAL:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "53.6")
+}
+
+record(ai,"$(P)SIM:POWER:MAX:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "421.2")
+}
+
+record(ai,"$(P)SIM:TEMP:HEATSINK:MAX:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "87.9")
+}
+
+record(ai,"$(P)SIM:TEMP:ENCLOSURE:MAX:RBV")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(VAL,  "62.8")
+}
+
+# record(stringin,"$(P)SIM:DATA:RAW")
+# {
+#     field(SCAN, "Passive")
+#     field(DTYP, "Soft Channel")
+#     field(VAL,  "1,1,280.0,280.0,1006,286,0,972")
+# }
+# 
+# record(stringin,"$(P)SIM:STATUS:RAW")
+# {
+#     field(SCAN, "Passive")
+#     field(DTYP, "Soft Channel")
+#     field(VAL,  "1,2,3,4,5")
+# }

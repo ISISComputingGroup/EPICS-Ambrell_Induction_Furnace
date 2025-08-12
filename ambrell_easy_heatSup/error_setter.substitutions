@@ -1,0 +1,16 @@
+file $(UTILITIES)/db/error_setter.template {
+    pattern {P, STREAM_PV, PV_NAME}
+    
+    {"\$(P)", "ADDRESS:RBV", "HEAT:RBV"}
+    {"\$(P)", "ADDRESS:RBV", "TANK:CURR:SP:RBV"}
+    {"\$(P)", "ADDRESS:RBV", "TANK:CURR:RBV"}
+    {"\$(P)", "ADDRESS:RBV", "POWER:RBV"}
+    {"\$(P)", "ADDRESS:RBV", "FREQ:RBV"}
+    {"\$(P)", "ADDRESS:RBV", "TIME:DOWN:RBV"}
+    {"\$(P)", "ADDRESS:RBV", "TIME:UP:RBV"}
+    
+    {"\$(P)", "VOLT:MAINS:RBV", "TIME:TOTAL:RBV"}
+    {"\$(P)", "VOLT:MAINS:RBV", "POWER:MAX:RBV"}
+    {"\$(P)", "VOLT:MAINS:RBV", "TEMP:HEATSINK:MAX:RBV"}
+    {"\$(P)", "VOLT:MAINS:RBV", "TEMP:ENCLOSURE:MAX:RBV"}
+}
