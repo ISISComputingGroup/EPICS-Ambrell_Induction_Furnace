@@ -23,6 +23,7 @@ record(longin, "$(P)ID") {
     field(DTYP, "stream")
     field(SCAN, "10 second")            # SCAN rather than PINI to continuously check communications with device
     field(INP,  "@ambrell_easy_heat.proto getID($(ADDRESS)) $(PORT)")
+    field(EGU, "")
 
     info(alarm, "AMBRHEAT")             # add IOC to alarm system
     info(INTEREST, "MEDIUM")
@@ -38,6 +39,7 @@ record(longin, "$(P)ADDRESS:RBV") {
     field(DTYP, "stream")
     field(SCAN, "1 second") 
     field(INP,  "@ambrell_easy_heat.proto getData($(ADDRESS),$(P)) $(PORT)") # PV to read PSU data string and trigger record redirection to individual PVs
+    field(EGU, "")
 
     info(INTEREST, "MEDIUM")
     info(archive, "VAL")
